@@ -15,6 +15,7 @@ const SHORTCUTS_KEY = 'qtab-shortcuts';
 const DEFAULT_SETTINGS = {
   engine: 'google',
   clockScale: 1,
+  blurScale: 99,
 };
 
 // 支持的搜索引擎
@@ -73,6 +74,12 @@ function applyClockScale() {
   document.documentElement.style.setProperty('--clock-scale', settings.clockScale);
 }
 applyClockScale();
+
+//应用blur模糊度
+function applyBlurScale(){
+    document.documentElement.style.setProperty('--blur-scale',settings.blurScale);
+}
+applyBlurScale();
 
 // ===== 搜索 =====
 const searchEl = document.getElementById('search');
@@ -192,11 +199,15 @@ const settingsOverlay = document.getElementById('settings-overlay');
 const engineSelect = document.getElementById('engine-select');
 const clockSizeEl = document.getElementById('clock-size');
 const clockSizeValueEl = document.getElementById('clock-size-value');
+const blurScaleEl = document.getElementById('blur-scale');
+const blurScaleValueEl = document.getElementById('blur-scale-value');
 
 document.getElementById('settings-btn').addEventListener('click', () => {
   engineSelect.value = settings.engine;
   clockSizeEl.value = settings.clockScale;
+  blurScaleEl.value = settings.blurScale;
   clockSizeValueEl.textContent = `${Math.round(settings.clockScale * 100)}%`;
+  blurScaleValueEl.textContent = settings.blurScale;
   settingsOverlay.classList.remove('hidden');
 });
 
@@ -216,6 +227,13 @@ clockSizeEl.addEventListener('input', () => {
   saveSettings();
   applyClockScale();
 });
+
+blurScaleEl.addEventListener('input',()=>{
+    settings.blurScale = Number(blurScaleEl.value);
+    blurScaleValueEl.textContent = blurScaleEl.value;
+    saveSettings();
+    applyClockScale();
+})
 
 // 点击遮罩空白处或按 Esc 关闭弹层
 [settingsOverlay, shortcutOverlay].forEach((overlay) => {

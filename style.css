@@ -76,8 +76,8 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(calc(1px * var(--blur-scale, 5)));
+  backdrop-filter: blur(calc(1px * var(--blur-scale, 5)));
   color: #fff;
   font-size: 1rem;
   font-family: inherit;
@@ -110,8 +110,8 @@ body::before {
   border: 1px solid rgba(255, 255, 255, 0.25);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.12);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(calc(1px * var(--blur-scale, 5)));
+  backdrop-filter: blur(calc(1px * var(--blur-scale, 5)));
   color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
   transition: background 0.25s ease, transform 0.4s ease;
