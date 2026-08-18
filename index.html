@@ -6,11 +6,67 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- 设置按钮 -->
+  <button id="settings-btn" title="设置" aria-label="设置">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+  </button>
+
   <div class="container">
     <h1 id="clock"><span id="time">00:00</span><span id="seconds">:00</span></h1>
     <p id="date"></p>
     <input type="text" id="search" placeholder="输入内容按回车搜索..." autocomplete="off" />
+    <!-- 网页快捷方式 -->
+    <div id="shortcuts"></div>
   </div>
+
+  <!-- 设置面板 -->
+  <div id="settings-overlay" class="overlay hidden">
+    <div class="panel">
+      <h2>设置</h2>
+      <div class="setting-item">
+        <label for="engine-select">搜索引擎</label>
+        <select id="engine-select">
+          <option value="google">Google</option>
+          <option value="bing">Bing</option>
+          <option value="baidu">百度</option>
+          <option value="duckduckgo">DuckDuckGo</option>
+        </select>
+      </div>
+      <div class="setting-item">
+        <label for="clock-size">时钟大小</label>
+        <div class="slider-row">
+          <input type="range" id="clock-size" min="0.5" max="1.5" step="0.05" />
+          <span id="clock-size-value">100%</span>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn primary" id="settings-close">完成</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 添加快捷方式对话框 -->
+  <div id="shortcut-overlay" class="overlay hidden">
+    <div class="panel">
+      <h2>添加快捷方式</h2>
+      <div class="setting-item">
+        <label for="shortcut-name">名称</label>
+        <input type="text" id="shortcut-name" placeholder="例如：GitHub" autocomplete="off" />
+      </div>
+      <div class="setting-item">
+        <label for="shortcut-url">网址</label>
+        <input type="text" id="shortcut-url" placeholder="例如：github.com" autocomplete="off" />
+      </div>
+      <div class="dialog-actions">
+        <button class="btn" id="shortcut-cancel">取消</button>
+        <button class="btn primary" id="shortcut-save">添加</button>
+      </div>
+    </div>
+  </div>
+
   <script src="main.js"></script>
 </body>
 </html>

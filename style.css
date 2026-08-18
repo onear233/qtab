@@ -33,16 +33,16 @@ body::before {
 .container {
   position: relative;
   z-index: 1;
-  margin-top: 32vh; /* 屏幕中间偏上 */
+  margin-top: 10vh; /* 屏幕中间偏上 */
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 }
 
-/* 时钟 */
+/* 时钟（大小可在设置中通过 --clock-scale 缩放） */
 #clock {
-  font-size: clamp(4.5rem, 13vw, 10rem);
+  font-size: calc(clamp(4.5rem, 13vw, 10rem) * var(--clock-scale, 1));
   font-weight: 200;
   line-height: 1;
   letter-spacing: 0.02em;
@@ -94,4 +94,247 @@ body::before {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.55);
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08);
+}
+
+/* 设置按钮 */
+#settings-btn {
+  position: fixed;
+  top: 1.2rem;
+  right: 1.2rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.4s ease;
+}
+
+#settings-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: rotate(60deg);
+}
+
+/* 网页快捷方式 */
+#shortcuts {
+  margin-top: 2.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.1rem;
+  max-width: min(640px, 90vw);
+}
+
+.shortcut {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  width: 72px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #fff;
+  text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.shortcut-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  font-size: 1.4rem;
+  font-weight: 300;
+  overflow: hidden;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.shortcut:hover .shortcut-icon {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+.shortcut-icon img {
+  width: 28px;
+  height: 28px;
+}
+
+.shortcut-name {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.78rem;
+  opacity: 0.85;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+.shortcut-remove {
+  position: absolute;
+  top: -7px;
+  right: 1px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.65);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.shortcut:hover .shortcut-remove {
+  display: flex;
+}
+
+.shortcut-remove:hover {
+  background: rgba(220, 60, 60, 0.9);
+  color: #fff;
+}
+
+.shortcut-add .shortcut-icon {
+  border-style: dashed;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* 弹层（设置面板 / 添加快捷方式对话框） */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.45);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.panel {
+  width: min(360px, 88vw);
+  padding: 1.6rem 1.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  background: rgba(30, 30, 45, 0.85);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.panel h2 {
+  margin-bottom: 1.2rem;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.setting-item {
+  margin-bottom: 1.1rem;
+}
+
+.setting-item label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.setting-item select,
+.setting-item input[type="text"] {
+  width: 100%;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+}
+
+.setting-item select:focus,
+.setting-item input[type="text"]:focus {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.setting-item select option {
+  background: #1e1e2d;
+  color: #fff;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.slider-row input[type="range"] {
+  flex: 1;
+  accent-color: #fff;
+}
+
+#clock-size-value {
+  min-width: 3em;
+  text-align: right;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.8;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7rem;
+  margin-top: 1.3rem;
+}
+
+.btn {
+  padding: 0.5rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 0.9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.btn.primary {
+  background: rgba(255, 255, 255, 0.85);
+  color: #14141f;
+  border-color: transparent;
+}
+
+.btn.primary:hover {
+  background: #fff;
 }
